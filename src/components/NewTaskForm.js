@@ -1,39 +1,34 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
 
-const NewTaskForm = ({ onAddTask }) => {
-  const [newTask, setNewTask] = useState('');
-
-  const handleChange = (e) => {
-    setNewTask(e.target.value);
-  };
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (newTask.trim() !== '') {
-      onAddTask(newTask);
-      setNewTask('');
+export default class NewTaskForm extends React.Component {
+  onEnterPress = (e) => {
+    const { onItemAdded, value } = this.props
+    if (e.keyCode === 13) {
+      onItemAdded(value)
     }
-  };
+  }
 
-  return (
-    <header className="header">
-      <h1>todos</h1>
-      <form onSubmit={handleSubmit}>
-        <input
-          className="new-todo"
-          placeholder="What needs to be done?"
-          autoFocus
-          value={newTask}
-          onChange={handleChange}
-        />
-      </form>
-    </header>
-  );
-};
+  render() {
+    const { value, newTaskChangeHandler } = this.props
+    return (
+      <input
+        className="new-todo"
+        placeholder="What needs to be done?"
+        value={value}
+        onChange={newTaskChangeHandler}
+        onKeyDown={this.onEnterPress}
+      />
+    )
+  }
+}
 
 NewTaskForm.propTypes = {
-  onAddTask: PropTypes.func.isRequired,
-};
+  value: PropTypes.string,
+  newTaskChangeHandler: PropTypes.func.isRequired,
+  onItemAdded: PropTypes.func.isRequired,
+}
 
-export default NewTaskForm;
+NewTaskForm.defaultProps = {
+  value: '',
+}

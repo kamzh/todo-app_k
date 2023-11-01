@@ -1,68 +1,40 @@
-import React from 'react';
-import { formatDistanceToNow } from 'date-fns';
-import PropTypes from 'prop-types';
+import React from 'react'
+import PropTypes from 'prop-types'
+import formatDistanceToNow from 'date-fns/formatDistanceToNow'
 
-const Task = ({ task, onToggle, onDelete, onEdit, onUpdate, isEditing }) => {
-  const { description, created, completed } = task;
-  const [newDescription, setNewDescription] = useState(description);
+export default class Task extends React.Component {
+  clickHandler = (e) => {
+    const { onEditTask, id, description } = this.props
+    onEditTask(id, description)
+    setTimeout(() => e.target.closest('li').querySelector('.edit').focus(), 50)
+  }
 
-  const handleToggle = () => {
-    onToggle(task);
-  };
+  render() {
+    const { description, created, id, completed, onDeleteTask, onCompleteTask } = this.props
+    const delId = `${id}del`
+    const editId = `${id}edit`
 
-  const handleDelete = () => {
-    onDelete(task);
-  };
-
-  const handleEdit = () => {
-    onEdit(task);
-  };
-
-  const handleUpdate = () => {
-    onUpdate(id, newDescription);
-  };
-
-  const timeAgo = formatDistanceToNow(new Date(created));
-
-  return (
-    <li className={completed ? 'completed' : ''}>
+    return (
       <div className="view">
-        <input className="toggle" type="checkbox" checked={completed} onChange={handleToggle} />
-        {isEditing ? (
-          <input
-            className="edit"
-            type="text"
-            value={newDescription}
-            onChange={(e) => setNewDescription(e.target.value)}
-            onBlur={handleUpdate}
-            autoFocus
-          />
-        ) : (
-          <label>
-            <span className="description">{description}</span>
-            <span className="created">created {timeAgo} ago</span>
-          </label>
-        )}
-        <button className="icon icon-edit" onClick={handleEdit}></button>
-        <button className="icon icon-destroy" onClick={handleDelete}></button>
-      </div>
-    </li>
-  );
-};
+        <input className="toggle" type="checkbox" checked={!!completed} onChange={() => onCompleteTask(id)} id={id} />
 
+        <label htmlFor={`${id} ${delId} ${editId}`}>
+          <span className="description">{description}</span>
+          <span className="created">{formatDistanceToNow(created)}</span>
+        </label>
+
+        <button className="icon icon-edit" onClick={this.clickHandler} type="button" id={editId} />
+        <button className="icon icon-destroy" onClick={() => onDeleteTask(id)} type="button" id={delId} />
+      </div>
+    )
+  }
+}
 
 Task.propTypes = {
-  task: PropTypes.shape({
-    id: PropTypes.number.isRequired,
-    description: PropTypes.string.isRequired,
-    created: PropTypes.instanceOf(Date).isRequired,
-    completed: PropTypes.bool.isRequired,
-  }).isRequired,
-  onToggle: PropTypes.func.isRequired,
-  onDelete: PropTypes.func.isRequired,
-  onEdit: PropTypes.func.isRequired,
-  onUpdate: PropTypes.func.isRequired,
-  isEditing: PropTypes.bool,
-};
-
-export default Task;
+  description: PropTypes.string.isRequired,
+  created: PropTypes.instanceOf(Date).isRequired,
+  id: PropTypes.number.isRequired,
+  completed: PropTypes.bool.isRequired,
+  onDeleteTask: PropTypes.func.isRequired,
+  onCompleteTask: PropTypes.func.isRequired,
+}
