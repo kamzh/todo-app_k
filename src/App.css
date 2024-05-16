@@ -1,9 +1,22 @@
+body {
+  font: 14px 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  line-height: 1.4em;
+  color: #333; 
+  background: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(10px); 
+  max-width: 550px;
+  margin: 0 auto;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  font-weight: 300;
+}
+
 .todoapp {
-	background: #fff;
-	margin: 130px 0 40px 0;
-	position: relative;
-	box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2),
-	            0 25px 50px 0 rgba(0, 0, 0, 0.1);
+  background: rgba(255, 255, 255, 0.2); 
+  margin: 130px 0 40px 0;
+  position: relative;
+  box-shadow: 0 2px 4px 0 rgba(122, 30, 30, 0.1), 0 25px 50px 0 rgba(0, 0, 0, 0.1); 
+  border-radius: 10px;
 }
 
 .todoapp input::-webkit-input-placeholder {
@@ -29,9 +42,9 @@
 	top: -140px;
 	width: 100%;
 	font-size: 80px;
-	font-weight: 200;
+	font-weight: 400;
 	text-align: center;
-	color: rgba(175, 47, 47, 0.15);
+	color: rgba(152, 27, 121, 0.2);
 	-webkit-text-rendering: optimizeLegibility;
 	-moz-text-rendering: optimizeLegibility;
 	text-rendering: optimizeLegibility;
@@ -59,7 +72,7 @@
 }
 
 .toggle-all + label:before {
-	content: '❯';
+	content: 'â¯';
 	font-size: 22px;
 	color: #e6e6e6;
 	padding: 10px 27px 10px 27px;
@@ -77,8 +90,12 @@
 
 .todo-list li {
 	position: relative;
-	font-size: 24px;
-	border-bottom: 1px solid #ededed;
+  font-size: 24px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.3); 
+  background-color: rgba(255, 255, 255, 0.1); 
+  backdrop-filter: blur(5px); 
+  padding: 15px; 
+  border-radius: 8px; 
 }
 
 .todo-list li:last-child {
@@ -164,8 +181,8 @@
 	position: absolute;
 	top: 0;
 	bottom: -3px;
-	width: 30px;
-	height: 40px;
+	width: 40px;
+	height: 70px;
 	font-size: 34px;
 	color: #cc9a9a;
 	margin: auto 0 11px;
@@ -179,10 +196,11 @@
 
 .todo-list li .icon-destroy {
 	right: 10px;
+  bottom: 1px;
 }
 
 .todo-list li .icon-destroy:after {
-	content: '×';
+	content: 'Ã—';
 }
 
 .todo-list li .icon-edit {
@@ -191,7 +209,7 @@
 }
 
 .todo-list li .icon-edit:after {
-	content: '✎';
+	content: 'âœŽ';
 }
 
 .todo-list li .edit {
@@ -204,6 +222,7 @@
 
 .new-todo,
 .edit {
+  background: rgba(255, 255, 255, 0.15);
 	position: relative;
 	margin: 0;
 	width: 100%;
@@ -223,7 +242,7 @@
 .main {
 	position: relative;
 	z-index: 2;
-	border-top: 1px solid #e6e6e6;
+	border-top: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .new-todo {
